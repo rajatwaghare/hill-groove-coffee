@@ -15,13 +15,9 @@ export default function AboutPage(){
         <div>
           <h1 className="text-[2.25rem] md:text-[2.5rem] leading-[1.05] font-semibold">About Hill Groove Coffee</h1>
           <p className="note mt-2 max-w-prose">Mountain calm meets music’s rhythm. We’re a roastery and listening room from Dehradun, pairing specialty coffee with curated vinyl so your cup and your track land on the same beat.</p>
-          <div className="flex gap-3 mt-4 flex-wrap">
-            <Button asChild><a href="/contact">Say Hello</a></Button>
-            <Button variant="outline" asChild><a href="/#shop">Shop Coffee</a></Button>
-          </div>
         </div>
         <div className="rounded-lg overflow-hidden border border-border">
-          <Image src="/photo-1517705008128-361805f42e86.jpeg" alt="Pour-over coffee beside a spinning vinyl" width={1400} height={934} />
+          <Image src="/photo-1517705008128-361805f42e86.jpg" alt="Pour-over coffee beside a spinning vinyl" width={1400} height={934} />
         </div>
       </section>
 
@@ -57,7 +53,7 @@ export default function AboutPage(){
         <h2 className="h2">Our Craft</h2>
         <div className="grid md:grid-cols-2 gap-6 items-center">
           <div className="rounded-lg overflow-hidden border border-border order-last md:order-first">
-            <Image src="/photo-1517705008128-361805f42e86.jpeg" alt="Roast sample and record sleeves" width={1400} height={934} />
+            <Image src="/highaltitudecoffeebeans.jpg" alt="Roast sample and record sleeves" width={1400} height={934} />
           </div>
           <ul className="note space-y-3">
             <li><span className="font-semibold">Small‑batch roasting:</span> measured heat application for even development and clean finishes.</li>

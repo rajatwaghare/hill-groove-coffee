@@ -8,7 +8,7 @@ export default function WhyHillRoast(){
       body: 'Picked on Himalayan slopes, roasted in small batches at 2 200 ft—clarity you can taste, rhythm you can feel.',
       cta: 'Know More',
       href: '#',
-      img: '/photo-1517705008128-361805f42e86.jpeg',
+      img: '/highaltitudecoffeebeans.jpg',
       alt: 'Spoon dropping coffee beans into a bag'
     },
     {
@@ -16,7 +16,7 @@ export default function WhyHillRoast(){
       body: 'Every roast is paired with blues, jazz or soul records that amplify flavour and sharpen focus. Taste the notes, hear the nuances.',
       cta: 'Know More',
       href: '#',
-      img: '/photo-1517705008128-361805f42e86.jpeg',
+      img: '/vinyl-infused-brews.jpg',
       alt: 'Hand holding a cup near a record player'
     },
     {
@@ -25,7 +25,7 @@ export default function WhyHillRoast(){
       cta: 'Coming Soon',
       href: '#',
       disabled: true,
-      img: '/photo-1517705008128-361805f42e86.jpeg',
+      img: '/quiet-studios-everywhere.jpg',
       alt: 'Person working in a calm plant-filled studio'
     }
   ]

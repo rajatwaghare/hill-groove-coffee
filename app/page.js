@@ -20,7 +20,7 @@ export default function Home() {
           </div>
         </div>
         <div className="rounded-lg overflow-hidden border border-border">
-          <Image src="/photo-1517705008128-361805f42e86.jpeg" alt="Coffee cup and vinyl" width={1200} height={900} />
+          <Image src="/photo-1517705008128-361805f42e86.jpg" alt="Coffee cup and vinyl" width={1200} height={900} />
         </div>
       </section>
       <WhyHillRoast></WhyHillRoast>

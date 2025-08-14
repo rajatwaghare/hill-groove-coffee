@@ -4,12 +4,10 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * Brew‑Groove Kit — Responsive v2
- * Fixes common mobile issues:
- *  - Grid overflow: parent gets `min-w-0` so the scroller can actually scroll
- *  - Center snapping on iOS/Android: `snap-center` + scroll padding sentinels
- *  - Peek card on mobile: card width uses vw
- *  - Exact prev/next step: measures first card + gap
+ * Brew‑Groove Kit — Responsive + Modal (No Price)
+ * - Mobile-safe horizontal carousel with precise stepping
+ * - "Know More" opens a popup (modal) with the same info style as Shop All
+ * - Shows: notes + (bean • process • roast); modal adds producer/state/altitude
  */
 export default function BrewGrooveKitResponsive({
   title = 'Your First Brew‑Groove Kit',
@@ -20,6 +18,7 @@ export default function BrewGrooveKitResponsive({
   const trackRef = useRef(null)
   const [active, setActive] = useState(0)
   const [step, setStep] = useState(0)
+  const [selected, setSelected] = useState(null) // modal product
 
   // measure card + gap for precise stepping
   useEffect(()=>{
@@ -41,6 +40,13 @@ export default function BrewGrooveKitResponsive({
     return () => el.removeEventListener('scroll', onScroll)
   }, [step])
 
+  // lock body scroll while modal open
+  useEffect(()=>{
+    if(typeof document === 'undefined') return
+    document.body.style.overflow = selected ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [selected])
+
   const scrollToIndex = (i) => {
     const el = trackRef.current
     if(!el || !step) return
@@ -52,7 +58,7 @@ export default function BrewGrooveKitResponsive({
     <section className="section py-14">
       <div className="grid lg:grid-cols-12 gap-8 items-start">
         {/* Left intro */}
-        <aside className="lg:col-span-4 ml-20 ">
+        <aside className="lg:col-span-4 ml-0 md:ml-20">
           <h2 className="text-slateh text-[28px] md:text-[30px] font-semibold tracking-[.02em] uppercase">{title}</h2>
           <p className="mt-3 text-[15px] leading-7 text-[#6b768a] max-w-[44ch]">{blurb}</p>
           <a href={viewAllHref} className="mt-6 inline-flex items-center gap-2 text-[13px] tracking-[.18em] uppercase text-slateh hover:opacity-80">
@@ -84,16 +90,21 @@ export default function BrewGrooveKitResponsive({
                   </div>
 
                   <h3 className="mt-5 text-center text-[20px] font-semibold text-slateh">{p.title}</h3>
-                  <div className="mt-1 text-center">
-                    <span className="text-[20px] font-bold text-[#222]">{p.price}</span>
-                    {p.compareAt && (
-                      <span className="ml-2 text-[14px] text-[#8b92a3] line-through">{p.compareAt}</span>
-                    )}
+                  {/* notes */}
+                  {p.notes && (
+                    <p className="mt-1 text-center text-[14px] leading-6 text-[#6b768a] max-w-[36ch] mx-auto">{p.notes}</p>
+                  )}
+                  {/* meta line */}
+                  <div className="mt-1 text-center text-xs uppercase tracking-[.14em] text-[#6b768a]">
+                    {[p.bean, p.process, p.roast].filter(Boolean).join(' • ')}
                   </div>
-                  <p className="mt-2 text-center text-[14px] leading-6 text-[#6b768a] max-w-[36ch] mx-auto">{p.excerpt}</p>
+
                   <div className="mt-4 flex justify-center">
-                    <button className="px-6 h-10 rounded-full border border-[#c9cfd9] bg-white text-[13px] tracking-[.14em] uppercase text-slateh hover:shadow-sm">
-                      Add to Cart
+                    <button
+                      onClick={()=>setSelected(p)}
+                      className="px-6 h-10 rounded-full border border-[#c9cfd9] bg-white text-[13px] tracking-[.14em] uppercase text-slateh hover:shadow-sm"
+                    >
+                      Know More
                     </button>
                   </div>
                 </article>
@@ -120,6 +131,34 @@ export default function BrewGrooveKitResponsive({
         </div>
       </div>
 
+      {/* Modal */}
+      {selected && (
+        <Modal onClose={()=>setSelected(null)}>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="rounded-[14px] overflow-hidden border border-[#e7dfd6] bg-[#f6efe6]">
+              <Image src={selected.image} alt={selected.alt || selected.title} width={1200} height={1000} className="w-full h-auto object-cover" />
+            </div>
+            <div>
+              <h3 className="text-[22px] font-semibold text-slateh">{selected.title}</h3>
+              {selected.notes && <p className="mt-2 text-[15px] leading-7 text-[#6b768a]">{selected.notes}</p>}
+
+              <dl className="mt-4 grid grid-cols-[auto,1fr] gap-x-4 gap-y-2 text-sm">
+                {row('Process', selected.process)}
+                {row('Roast', selected.roast)}
+                {row('Bean', selected.bean)}
+                {row('Producer', selected.producer)}
+                {row('State', selected.state)}
+                {row('Altitude', selected.altitude)}
+              </dl>
+
+              <div className="mt-4 flex gap-2">
+                <button onClick={()=>setSelected(null)} className="px-5 h-10 rounded-full border border-[#c9cfd9] bg-white text-[13px] tracking-[.14em] uppercase text-slateh hover:shadow-sm">Close</button>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
+
       <style jsx global>{`
         /* hide native scrollbar (non‑essential) */
         .scrollbar-none{ scrollbar-width: none; }
@@ -129,41 +168,75 @@ export default function BrewGrooveKitResponsive({
   )
 }
 
+function Modal({ children, onClose }){
+  useEffect(()=>{
+    const onKey = (e)=>{ if(e.key === 'Escape') onClose?.() }
+    window.addEventListener('keydown', onKey)
+    return ()=> window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  return (
+    <div className="fixed inset-0 z-[60] grid place-items-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
+      <div className="max-w-3xl w-full rounded-[14px] border border-[#e7dfd6] bg-white p-4 shadow-xl" onClick={(e)=>e.stopPropagation()} role="dialog" aria-modal="true">
+        <div className="flex justify-end">
+          <button aria-label="Close" onClick={onClose} className="w-8 h-8 grid place-items-center rounded-full border border-[#c9cfd9]">✕</button>
+        </div>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function row(k, v){ if(!v) return null; return (<><dt className="text-[#6b768a]">{k}</dt><dd>{v}</dd></>) }
+
+// Example default data using Shop All fields (no price)
 const DEFAULT_PRODUCTS = [
   {
-    id: '1',
-    title: 'Attikan Estate - Natural (Dry)',
-    price: '₹540',
-    compareAt: '₹840',
-    badge: '40% OFF',
-    excerpt: 'It symbolises the aromatic balance and roundness that defines our coffees and…',
-    image: '/photo-1517705008128-361805f42e86.jpeg',
+    id: 'attikan-natural',
+    title: 'Attikan Estate — Natural',
+    notes: 'Orange zest, toffee, cocoa nib.',
+    bean: 'Arabica',
+    process: 'Natural',
+    roast: 'Medium',
+    producer: '—',
+    state: 'Chikmagalur, KA',
+    altitude: '1200–1400 m',
+    image: '/product.jpg',
   },
   {
-    id: '2',
-    title: 'Harley Estate - Natural (Dry)',
-    price: '₹540',
-    compareAt: '₹840',
-    badge: '40% OFF',
-    excerpt: 'It symbolises the aromatic balance and roundness that defines our coffees and…',
-    image: '/photo-1517705008128-361805f42e86.jpeg',
+    id: 'monsoon-malabar',
+    title: 'Monsoon Malabar',
+    notes: 'Caramel, hazelnut, stone fruit.',
+    bean: 'Arabica',
+    process: 'Monsooned',
+    roast: 'Medium‑Dark',
+    producer: '—',
+    state: 'Malabar Coast, IN',
+    altitude: 'Sea level–600 m',
+    image: '/product.jpg',
   },
   {
-    id: '3',
-    title: 'Ratnagiri Estate - Natural (Dry)',
-    price: '₹540',
-    compareAt: '₹840',
-    badge: '40% OFF',
-    excerpt: 'It symbolises the aromatic balance and roundness that defines our coffees and…',
-    image: '/photo-1517705008128-361805f42e86.jpeg',
+    id: 'groove-espresso',
+    title: 'Groove Espresso Blend',
+    notes: 'Dark chocolate, toasted almond.',
+    bean: 'Arabica/Robusta',
+    process: 'Blend',
+    roast: 'Dark',
+    producer: '—',
+    state: 'Select Estates, IN',
+    altitude: '—',
+    image: '/product.jpg',
   },
   {
-    id: '4',
-    title: 'House Blend - Medium Roast',
-    price: '₹480',
-    compareAt: '₹620',
-    badge: '20% OFF',
-    excerpt: 'Balanced chocolate and citrus with a creamy finish.',
-    image: '/photo-1517705008128-361805f42e86.jpeg',
+    id: 'ratnagiri-natural',
+    title: 'Ratnagiri Estate — Natural',
+    notes: 'Berry compote, panela, cacao.',
+    bean: 'Arabica',
+    process: 'Natural',
+    roast: 'Medium',
+    producer: '—',
+    state: 'Chikmagalur, KA',
+    altitude: '1200–1400 m',
+    image: '/product.jpg',
   },
 ]
