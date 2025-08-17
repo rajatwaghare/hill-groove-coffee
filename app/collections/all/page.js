@@ -24,7 +24,7 @@ const PRODUCTS = [
     state: "Koraput, OD",
     altitude: "1000 m",
     notes: "Citrusy, Spicy, Caramel",
-    image: "/product.jpg",
+    image: "/madhu-agro-estate.jpg",
   },
   {
     id: "madhu-agro-washed",
@@ -36,7 +36,7 @@ const PRODUCTS = [
     state: "Koraput, OD",
     altitude: "1000 m",
     notes: "Juicy, Zesty, Bright with hints of milk chocolate",
-    image: "/product.jpg",
+    image: "/madhu-agro-estate.jpg",
   },
   {
     id: "harley-saccharobrew",
@@ -48,7 +48,7 @@ const PRODUCTS = [
     state: "Sakleshpur, KA",
     altitude: "1040 m",
     notes: "Dark fruits, berries & sugarcane",
-    image: "/product.jpg",
+    image: "/harley-estate.jpg",
   },
   {
     id: "harley-anaerobic-natural",
@@ -60,7 +60,7 @@ const PRODUCTS = [
     state: "Sakleshpur, KA",
     altitude: "1040 m",
     notes: "Tropical Fruit, Vanilla & Milk Chocolate",
-    image: "/product.jpg",
+    image: "/harley-estate.jpg",
   },
   {
     id: "narmada-honey",
@@ -72,7 +72,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1100 m",
     notes: "Citrus, Tropical, Berries",
-    image: "/product.jpg",
+    image: "/narmada-estate.jpg",
   },
   {
     id: "mooleh-maney",
@@ -84,7 +84,7 @@ const PRODUCTS = [
     state: "Coorg, KA",
     altitude: "1000 m",
     notes: null,
-    image: "/product.jpg",
+    image: "/mooleh-maney-estate.jpg",
   },
   {
     id: "sai-ashirwad",
@@ -96,7 +96,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1100 m",
     notes: "Bold, Earthy, Fruit forward - Cherry, Fig, Plum, Berries",
-    image: "/product.jpg",
+    image: "/sai-ashirwad-estate.jpg",
   },
   {
     id: "biccode",
@@ -108,7 +108,7 @@ const PRODUCTS = [
     state: "Huskur, KA",
     altitude: "1180 m",
     notes: null,
-    image: "/product.jpg",
+    image: "/biccode-estate.jpg",
   },
   {
     id: "biccode-anaerobic-washed",
@@ -120,7 +120,7 @@ const PRODUCTS = [
     state: "Huskur, KA",
     altitude: "1180 m",
     notes: "Citrus, Raisin, Honey",
-    image: "/product.jpg",
+    image: "/biccode-estate.jpg",
   },
   {
     id: "ratnagiri",
@@ -132,7 +132,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1350 m",
     notes: null,
-    image: "/product.jpg",
+    image: "/ratnagiri-estate.jpg",
   },
   {
     id: "ratnagiri-yeast-fermentation-natural",
@@ -144,7 +144,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1350 m",
     notes: "Stonefruit, Pink Guava, Lychee & Vanilla",
-    image: "/product.jpg",
+    image: "/ratnagiri-estate.jpg",
   },
   {
     id: "salawar",
@@ -156,7 +156,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1100 m",
     notes: null,
-    image: "/product.jpg",
+    image: "/salawara-estate.jpg",
   },
   {
     id: "ratnagiri-washed",
@@ -168,7 +168,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1350 m",
     notes: "Lemon, Lime, Citrus, Chocolate & Caramel",
-    image: "/product.jpg",
+    image: "/ratnagiri-estate.jpg",
   },
   {
     id: "salawar-honey",
@@ -180,7 +180,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1100 m",
     notes: "Caramel & Dark Chocolate",
-    image: "/product.jpg",
+    image: "/salawara-estate.jpg",
   },
   {
     id: "salawar-anaerobic-natural",
@@ -192,7 +192,7 @@ const PRODUCTS = [
     state: "Chikmagalur, KA",
     altitude: "1100 m",
     notes: "Pineapple, Caramel, Marshmallow, Dark Chocolate",
-    image: "/product.jpg",
+    image: "/salawara-estate.jpg",
   },
 ]
 
